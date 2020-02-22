@@ -4,7 +4,8 @@ from telegram.utils.request import Request
 
 from settings.settings import TEST_TOKEN
 from settings.settings import TG_API_PROXY
-from .handlers import message_handler
+from location_bot.handlers import message_handler
+from location_bot.handlers import location_handler
 
 
 
@@ -20,7 +21,8 @@ def main():
     updater = Updater(bot=bot, use_context=True)
     print(updater.bot.get_me())
 
-    updater.dispatcher.add_handler(MessageHandler(filters=Filters.all, callback=message_handler))
+    updater.dispatcher.add_handler(MessageHandler(filters=Filters.text, callback=message_handler))
+    updater.dispatcher.add_handler(MessageHandler(filters=Filters.location, callback=location_handler))
 
     updater.start_polling()
     updater.idle()
